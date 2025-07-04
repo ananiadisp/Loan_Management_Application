@@ -1,0 +1,75 @@
+## Build results
+bin/
+obj/
+out/
+
+## User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+## Rider / JetBrains IDE
+.idea/
+*.sln.iml
+
+## VS Code
+.vscode/
+
+## VS
+.vs/
+
+## ASP.NET Secrets
+**/appsettings.Development.json
+**/appsettings.Local.json
+**/secrets.json
+.env
+*.pfx
+
+## Logs
+logs/
+*.log
+
+## Runtime
+*.db
+*.pidb
+*.mdb
+*.svclog
+
+## Backup & Packages
+*.bak
+*.orig
+*.tmp
+*.old
+*.nupkg
+packages/
+.nuget/
+
+## Test results
+TestResults/
+*.coverage
+*.coveragexml
+*.testresults
+
+## DotCover
+.idea/
+*.dotCover
+
+## Resharper
+_ReSharper*/
+*.[Rr]e[Ss]harper
+
+## Dapper-specific (no special files, covered by bin/obj)
+
+## EF Core Migrations (keep the folder, ignore binaries)
+Migrations/*.Designer.cs
+Migrations/*.csproj
+
+## Publish output
+publish/
+wwwroot/
+
+## OS-specific
+.DS_Store
+Thumbs.db
+desktop.ini
