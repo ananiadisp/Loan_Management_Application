@@ -1,4 +1,5 @@
-﻿using LoanManagement.Core.DTOs;
+﻿using LoanManagement.API.Validators;
+using LoanManagement.Core.DTOs;
 using LoanManagement.Core.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,6 +18,8 @@ namespace LoanManagement.API.Controllers
         [HttpPost]
         public async Task<IActionResult> SubmitPayment([FromBody] CreatePaymentDto createPaymentDto)
         {
+            new CreatePaymentDtoValidator().ValidateOrThrow(createPaymentDto);
+
             var payment = await _paymentService.SubmitPayment(createPaymentDto);
             return Ok(payment);
         }

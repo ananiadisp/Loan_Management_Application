@@ -1,9 +1,8 @@
-﻿using LoanManagement.Core.DTOs;
-using LoanManagement.Core.Entities;
+﻿using FluentValidation;
+using LoanManagement.API.Validators;
+using LoanManagement.Core.DTOs;
 using LoanManagement.Core.Interfaces;
-using LoanManagement.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Mvc;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace LoanManagement.API.Controllers
 {
@@ -33,9 +32,11 @@ namespace LoanManagement.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> SubmitLoanApplication([FromBody] CreateLoanApplicationDto dto)
+        public async Task<IActionResult> SubmitLoanApplication([FromBody] CreateLoanApplicationDto createLoanApplicationDto)
         {
-            var id = await _loanService.SubmitLoanApplication(dto);
+            new CreateLoanApplicationDtoValidator().ValidateOrThrow(createLoanApplicationDto);
+          
+            var id = await _loanService.SubmitLoanApplication(createLoanApplicationDto);
             return CreatedAtAction(nameof(GetApplicationById), new { id = id }, id);
         }
 

@@ -1,5 +1,5 @@
-﻿using LoanManagement.Core.Exceptions;
-using System.ComponentModel.DataAnnotations;
+﻿using LoanManagement.API.Validators;
+using LoanManagement.Core.Exceptions;
 using System.Net;
 using System.Text.Json;
 
@@ -22,6 +22,14 @@ namespace LoanManagement.API.Middleware
             {
                 await _next(context);
             }
+            catch (ValidatorException ex)
+            {
+                context.Response.StatusCode = StatusCodes.Status400BadRequest;
+                context.Response.ContentType = "application/json";
+
+                var response = JsonSerializer.Serialize(ex.Errors);
+                await context.Response.WriteAsync(response);
+            }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "An unhandled exception occurred");
@@ -32,7 +40,7 @@ namespace LoanManagement.API.Middleware
                 var statusCode = ex switch
                 {
                     NotFoundException => HttpStatusCode.NotFound,
-                    ValidationException => HttpStatusCode.BadRequest,
+                    System.ComponentModel.DataAnnotations.ValidationException => HttpStatusCode.BadRequest,
                     _ => HttpStatusCode.InternalServerError
                 };
 
