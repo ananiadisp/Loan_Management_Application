@@ -12,7 +12,7 @@ namespace LoanManagement.Core.Interfaces
     {
         Task<IEnumerable<Loan>> GetAllAsync();
         Task<decimal?> GetLoanBalanceAsync(int loanId);
-        Task<int> InsertApplicationAsync(LoanApplication dto);
+        Task<int> InsertApplicationAsync(LoanApplication loanApplication);
         Task<LoanApplication> GetLoanApplication(int loanApplicationId);
     }
 }
