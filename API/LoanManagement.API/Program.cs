@@ -8,7 +8,6 @@ builder.Services.AddOpenApi();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddApplicationServices();
-builder.Services.AddApplicationServices(); 
 
 var app = builder.Build();
 

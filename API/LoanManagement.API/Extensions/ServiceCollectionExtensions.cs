@@ -9,7 +9,12 @@ namespace LoanManagement.API.Extensions
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
             services.AddScoped<ILoanRepository, LoanRepository>();
+            services.AddScoped<ICustomerRepository, CustomerRepository>();
+            services.AddScoped<IPaymentRepository, PaymentRepository>();
+
             services.AddScoped<ILoanService, LoanService>();
+            services.AddScoped<ICustomerService, CustomerService>();
+            services.AddScoped<IPaymentService, PaymentService>();
             return services;
         }
     }
