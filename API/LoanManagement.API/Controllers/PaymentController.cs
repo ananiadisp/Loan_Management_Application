@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace LoanManagement.API.Controllers
 {
+    [ApiController]
+    [Route("api/[controller]")]
     public class PaymentController : ControllerBase
     {
         private readonly IPaymentService _paymentService;
