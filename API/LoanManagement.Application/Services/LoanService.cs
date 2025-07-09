@@ -34,7 +34,7 @@ namespace LoanManagement.Application.Services
                 CustomerID = createLoanApplicationDto.CustomerId,
                 LoanProductID = createLoanApplicationDto.LoanProductId,
                 RequestedAmount = createLoanApplicationDto.RequestedAmount,
-                ApplicationStatus = "Pending",
+                ApplicationStatus = "Approved",
                 ApplicationDate = DateTime.UtcNow
             };
 

@@ -51,10 +51,10 @@ namespace LoanManagement.Infrastructure.Repositories
         public async Task<int> InsertApplicationAsync(LoanApplication loanApplication)
         {
             const string sql = @"
-            INSERT INTO CoreLoan.LoanApplications
-            (CustomerId, LoanProductId, RequestedAmount, Status, ApplicationDate)
-            OUTPUT INSERTED.Id
-            VALUES (@CustomerId, @LoanProductId, @RequestedAmount, @Status, @ApplicationDate);";
+            INSERT INTO LoanApp.LoanApplications
+            (CustomerId, LoanProductId, RequestedAmount, ApplicationStatus, ApplicationDate)
+            OUTPUT INSERTED.ApplicationID
+            VALUES (@CustomerId, @LoanProductId, @RequestedAmount, @ApplicationStatus, @ApplicationDate);";
 
             using var connection = new SqlConnection(_connectionString);
             await connection.OpenAsync();
@@ -72,9 +72,9 @@ namespace LoanManagement.Infrastructure.Repositories
             using var connection = new SqlConnection(_connectionString);
             await connection.OpenAsync();
 
-            var sql = "SELECT * FROM CoreLoan.LoanApplications WHERE ApplicationID = @loanApplicationId";
+            var sql = "SELECT * FROM LoanApp.LoanApplications WHERE ApplicationID = @LoanApplicationId";
 
-            var result = await connection.QuerySingleOrDefaultAsync<LoanApplication>(sql, new { ApplicationID = loanApplicationId });
+            var result = await connection.QuerySingleOrDefaultAsync<LoanApplication>(sql, new { LoanApplicationId = loanApplicationId });
 
             if (result is null)
             {
