@@ -23,9 +23,9 @@ namespace LoanManagement.Infrastructure.Repositories
         public async Task<int> InsertPaymentAsync(Payment payment)
         {
             const string sql = @"
-            INSERT INTO CoreLoan.Payments (LoanId, Amount, PaymentDate)
-            OUTPUT INSERTED.Id
-                VALUES (@LoanId, @Amount, @PaymentDate);";
+            INSERT INTO CoreLoan.Payments (LoanId, PaymentAmount, PaymentDate)
+            OUTPUT INSERTED.PaymentId
+                VALUES (@LoanId, @PaymentAmount, @PaymentDate);";
 
             using var connection = new SqlConnection(_connectionString);
             await connection.OpenAsync();
