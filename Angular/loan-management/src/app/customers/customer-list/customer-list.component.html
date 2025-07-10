@@ -1,10 +1,11 @@
-<div *ngIf="loading">Loading customers...</div>
+<!-- <div *ngIf="loading">Loading customers...</div>
 <div *ngIf="error">{{ error }}</div>
-<div *ngIf="!loading && !error">
-  <!-- <div *ngFor="let c of customers" (click)="select(c)"
-       [appPalette]="c.firstName">
-    {{c.firstName}} {{c.lastName}} ({{c.registrationDate | yearsSince}} years)
-    <span *ngIf="(now.getFullYear()-new Date(c.registrationDate).getFullYear())>5" title="Important">❗</span>
-  </div> -->
-  <div *ngFor="let c of customers">{{ c.firstName }} {{ c.lastName }}</div>
+<div *ngIf="!loading && !error"> -->
+<div *ngFor="let c of customers" [routerLink]="['/customers', c.id, 'details']" [appPalette]="c.firstName">
+  {{ c.firstName }} {{ c.lastName }} ({{ c.registrationDate | yearsSince }}
+  years)
+  <span *ngIf="isImportantCustomer(c.registrationDate)" title="Important"
+    >❗</span
+  >
 </div>
+<!-- </div> -->

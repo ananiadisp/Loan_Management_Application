@@ -1,12 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { CustomerService } from '../services/customer.service';
 import { CommonModule } from '@angular/common';
+import { YearsSincePipe } from '../../shared/years-since.pipe';
+import { PaletteDirective } from '../../shared/palette.directive';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-customer-list',
   templateUrl: './customer-list.component.html',
   styleUrls: ['./customer-list.component.scss'],
-  imports: [CommonModule],
+  imports: [CommonModule, YearsSincePipe, PaletteDirective, RouterLink],
   providers: [CustomerService],
 })
 export class CustomerListComponent implements OnInit {
@@ -34,7 +37,9 @@ export class CustomerListComponent implements OnInit {
     });
   }
 
-  select(customer: any) {
-    console.log('Selected:', customer);
+  public isImportantCustomer(registrationDate: string): boolean {
+    const regYear = new Date(registrationDate).getFullYear();
+    const nowYear = new Date().getFullYear();
+    return nowYear - regYear > 5;
   }
 }

@@ -5,7 +5,7 @@ export const routes: Routes = [
   { path: 'home', component: DummyHomeComponent },
   {
     path: 'customers',
-    loadChildren: () =>
+    loadComponent: () =>
       import('./customers/index').then((m) => m.CustomerListComponent),
   },
   // { path: '', redirectTo: '/home', pathMatch: 'full' },
