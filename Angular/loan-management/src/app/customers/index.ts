@@ -1,0 +1,1 @@
+export { CustomerListComponent } from './customer-list/customer-list.component';
