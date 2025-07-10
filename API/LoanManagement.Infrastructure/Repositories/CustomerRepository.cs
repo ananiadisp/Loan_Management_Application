@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using LoanManagement.Core.DTOs;
 using LoanManagement.Core.Entities;
 using LoanManagement.Core.Interfaces;
 using Microsoft.Data.SqlClient;
@@ -23,6 +24,50 @@ namespace LoanManagement.Infrastructure.Repositories
 
             var loans = await connection.QueryAsync<Customer>(sql);
             return loans;
+        }
+
+        public async Task<CustomerDto?> GetCustomer(int customerId)
+        {
+            const string sql = @"
+                SELECT 
+                    c.CustomerID AS Id,
+                    c.FirstName,
+                    c.LastName,
+                    c.RegistrationDate,
+                    l.LoanID AS Id,
+                    l.CustomerID,
+                    l.ApprovedAmount
+                FROM CoreLoan.Customers c
+                LEFT JOIN CoreLoan.Loans l ON c.CustomerID = l.CustomerID
+                WHERE c.CustomerID = @CustomerId";
+
+            using var connection = new SqlConnection(_connectionString);
+            await connection.OpenAsync();
+
+            var customerMap = new Dictionary<int, CustomerDto>();
+
+            var result = await connection.QueryAsync<CustomerDto, LoanDto, CustomerDto>(
+                sql,
+                (customer, loan) =>
+                {
+                    if (!customerMap.TryGetValue(customer.Id, out var existingCustomer))
+                    {
+                        existingCustomer = customer;
+                        existingCustomer.Loans = new List<LoanDto>();
+                        customerMap.Add(existingCustomer.Id, existingCustomer);
+                    }
+
+                    if (loan != null && loan.Id != 0)
+                    {
+                        existingCustomer.Loans.Add(loan);
+                    }
+                    return existingCustomer;
+                },
+                new { CustomerId = customerId },
+                splitOn: "Id"
+            );
+
+            return customerMap.Values.FirstOrDefault();
         }
     }
 }

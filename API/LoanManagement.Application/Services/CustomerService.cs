@@ -1,4 +1,5 @@
-﻿using LoanManagement.Core.Entities;
+﻿using LoanManagement.Core.DTOs;
+using LoanManagement.Core.Entities;
 using LoanManagement.Core.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -15,9 +16,14 @@ namespace LoanManagement.Application.Services
         {
             _customerRepository = customerRepository;
         }
-        public Task<IEnumerable<Customer>> GetAllAsync()
+        public async Task<IEnumerable<Customer>> GetAllAsync()
         {
-            return _customerRepository.GetAllAsync();
+            return await _customerRepository.GetAllAsync();
+        }
+
+        public async Task<CustomerDto?> GetCustomer(int customerId)
+        {
+            return await _customerRepository.GetCustomer(customerId);
         }
     }
 }

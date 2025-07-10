@@ -1,4 +1,5 @@
-﻿using LoanManagement.Core.Interfaces;
+﻿using LoanManagement.Application.Services;
+using LoanManagement.Core.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LoanManagement.API.Controllers
@@ -19,6 +20,16 @@ namespace LoanManagement.API.Controllers
         {
             var customers = await _customerService.GetAllAsync();
             return Ok(customers);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetCustomer(int id)
+        {
+            var customer = await _customerService.GetCustomer(id);
+            if (customer == null)
+                return NotFound();
+
+            return Ok(customer);
         }
     }
 }

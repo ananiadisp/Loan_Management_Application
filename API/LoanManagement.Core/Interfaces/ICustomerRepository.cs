@@ -1,4 +1,5 @@
-﻿using LoanManagement.Core.Entities;
+﻿using LoanManagement.Core.DTOs;
+using LoanManagement.Core.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,5 +11,6 @@ namespace LoanManagement.Core.Interfaces
     public interface ICustomerRepository
     {
         Task<IEnumerable<Customer>> GetAllAsync();
+        Task<CustomerDto?> GetCustomer(int customerId);
     }
 }
