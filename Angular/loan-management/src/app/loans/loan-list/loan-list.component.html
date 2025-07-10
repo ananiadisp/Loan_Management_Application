@@ -1,27 +1,115 @@
-<div class="loan-list">
-  <h2>Loan Management</h2>
-  <p>
-    Welcome to the loan management section. Here you can view and manage all
-    loans.
-  </p>
-  <div class="loan-grid">
-    <div class="loan-card">
-      <h3>Personal Loan</h3>
-      <p>Interest Rate: 8.5%</p>
-      <p>Term: 24 months</p>
-      <button class="btn">View Details</button>
+<div class="loan-list-container">
+  <div class="header">
+    <h1>Loan Management</h1>
+    <button class="add-loan-btn">+ Add New Loan</button>
+  </div>
+
+  <div class="filters-section">
+    <div class="search-bar">
+      <input
+        type="text"
+        class="search-input"
+        placeholder="Search by loan ID, customer ID, or purpose..."
+        [(ngModel)]="searchTerm"
+        (input)="onSearchChange(searchTerm)"
+      />
     </div>
-    <div class="loan-card">
-      <h3>Home Loan</h3>
-      <p>Interest Rate: 6.2%</p>
-      <p>Term: 360 months</p>
-      <button class="btn">View Details</button>
+
+    <div class="status-filter">
+      <label>Filter by Status:</label>
+      <select
+        [(ngModel)]="selectedStatus"
+        (change)="onStatusFilterChange(selectedStatus)"
+        class="status-select"
+      >
+        <option [value]="null">All Statuses</option>
+        <option [value]="LoanStatus.PENDING">Pending</option>
+        <option [value]="LoanStatus.APPROVED">Approved</option>
+        <option [value]="LoanStatus.ACTIVE">Active</option>
+        <option [value]="LoanStatus.CLOSED">Closed</option>
+        <option [value]="LoanStatus.REJECTED">Rejected</option>
+        <option [value]="LoanStatus.DEFAULTED">Defaulted</option>
+        <option [value]="LoanStatus.DISBURSED">Disbursed</option>
+      </select>
     </div>
-    <div class="loan-card">
-      <h3>Car Loan</h3>
-      <p>Interest Rate: 7.8%</p>
-      <p>Term: 60 months</p>
-      <button class="btn">View Details</button>
+  </div>
+
+  <div class="content">
+    <div *ngIf="loading" class="loading">
+      <div class="spinner"></div>
+      <p>Loading loans...</p>
+    </div>
+
+    <div *ngIf="error" class="error">
+      <p>{{ error }}</p>
+      <button class="retry-btn" (click)="loadLoans()">Retry</button>
+    </div>
+
+    <div *ngIf="!loading && !error" class="loans-section">
+      <div *ngIf="(filteredLoans$ | async)?.length === 0" class="no-loans">
+        <div class="no-loans-icon">📋</div>
+        <h3>No loans found</h3>
+        <p>No loans match your search criteria.</p>
+      </div>
+
+      <div *ngIf="filteredLoans$ | async as filteredLoans" class="loans-grid">
+        <div
+          *ngFor="let loan of filteredLoans"
+          class="loan-card"
+          (click)="viewLoan(loan)"
+        >
+          <div class="loan-header">
+            <div class="loan-id">
+              <span class="label">Loan #</span>
+              <span class="value">{{ loan.id }}</span>
+            </div>
+            <div class="loan-status" [class]="getStatusClass(loan.status)">
+              <span class="status-icon">{{ getStatusIcon(loan.status) }}</span>
+              <span class="status-text">{{ loan.status }}</span>
+            </div>
+          </div>
+
+          <div class="loan-info">
+            <div class="info-row">
+              <span class="label">Customer ID:</span>
+              <span class="value">{{ loan.customerId }}</span>
+            </div>
+            <div class="info-row">
+              <span class="label">Purpose:</span>
+              <span class="value">{{ loan.purpose || "N/A" }}</span>
+            </div>
+            <div class="info-row">
+              <span class="label">Amount:</span>
+              <span class="value amount"
+                >${{ loan.approvedAmount.toNumber() | number : "1.2-2" }}</span
+              >
+            </div>
+            <div class="info-row" *ngIf="loan.interestRate">
+              <span class="label">Interest Rate:</span>
+              <span class="value">{{ loan.interestRate }}%</span>
+            </div>
+            <div class="info-row" *ngIf="loan.termInMonths">
+              <span class="label">Term:</span>
+              <span class="value">{{ loan.termInMonths }} months</span>
+            </div>
+            <div class="info-row">
+              <span class="label">Application Date:</span>
+              <span class="value">{{
+                loan.applicationDate | date : "shortDate"
+              }}</span>
+            </div>
+          </div>
+
+          <div class="loan-actions">
+            <button
+              class="view-btn"
+              (click)="viewLoan(loan); $event.stopPropagation()"
+            >
+              View Details
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

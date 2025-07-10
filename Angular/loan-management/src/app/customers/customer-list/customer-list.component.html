@@ -1,11 +1,42 @@
-<div
-  *ngFor="let c of customers$ | async"
-  (click)="select(c)"
-  [appPalette]="c.firstName"
->
-  {{ c.firstName }} {{ c.lastName }} ({{ c.registrationDate | yearsSince }}
-  years)
-  <span *ngIf="isImportantCustomer(c.registrationDate)" title="Important"
-    >❗</span
+<app-search-bar
+  (searchChange)="onSearchChange($event)"
+  (filtersChange)="onFiltersChange($event)"
+></app-search-bar>
+
+<div class="customers-container">
+  <div *ngIf="loading" class="loading">Loading customers...</div>
+  <div *ngIf="error" class="error">{{ error }}</div>
+  <div
+    *ngIf="!loading && !error && (filteredCustomers$ | async)?.length === 0"
+    class="no-results"
   >
+    No customers found matching your search criteria.
+  </div>
+
+  <div
+    *ngFor="let c of filteredCustomers$ | async"
+    (click)="select(c)"
+    [appPalette]="c.firstName"
+    class="customer-item"
+  >
+    <div class="customer-info">
+      <div class="customer-name">{{ c.firstName }} {{ c.lastName }}</div>
+      <div class="customer-details">
+        <span class="customer-email">{{ c.email }}</span>
+        <span class="customer-phone">{{ c.phone }}</span>
+      </div>
+      <div class="customer-meta">
+        <span class="registration-years"
+          >({{ c.registrationDate | yearsSince }} years)</span
+        >
+        <span *ngIf="!c.isActive" class="inactive-badge">Inactive</span>
+        <span
+          *ngIf="isImportantCustomer(c.registrationDate)"
+          class="important-badge"
+          title="Important"
+          >❗</span
+        >
+      </div>
+    </div>
+  </div>
 </div>

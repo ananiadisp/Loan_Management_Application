@@ -1,0 +1,44 @@
+<div class="search-container">
+  <div class="search-input-wrapper">
+    <input
+      type="text"
+      class="search-input"
+      placeholder="Search customers by name, email, or phone..."
+      [(ngModel)]="searchTerm"
+      (input)="onSearchChange()"
+      (keyup.enter)="onSearch()"
+    />
+    <button
+      class="search-button"
+      (click)="onSearch()"
+      [disabled]="!searchTerm.trim()"
+    >
+      🔍
+    </button>
+    <button
+      class="clear-button"
+      (click)="onClear()"
+      [class.hidden]="!searchTerm"
+    >
+      ✕
+    </button>
+  </div>
+  <div class="search-filters">
+    <label class="filter-label">
+      <input
+        type="checkbox"
+        [(ngModel)]="activeOnly"
+        (change)="onFiltersChange()"
+      />
+      Active customers only
+    </label>
+    <label class="filter-label">
+      <input
+        type="checkbox"
+        [(ngModel)]="importantOnly"
+        (change)="onFiltersChange()"
+      />
+      Important customers only
+    </label>
+  </div>
+</div>

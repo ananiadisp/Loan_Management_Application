@@ -1,7 +1,115 @@
-div {
+.customers-container {
+  margin-top: 20px;
+}
+
+.loading, .error, .no-results {
+  padding: 20px;
+  text-align: center;
+  font-size: 16px;
+  border-radius: 8px;
+  margin: 20px 0;
+}
+
+.loading {
+  background-color: #e3f2fd;
+  color: #1976d2;
+  border: 1px solid #bbdefb;
+}
+
+.error {
+  background-color: #ffebee;
+  color: #c62828;
+  border: 1px solid #ffcdd2;
+}
+
+.no-results {
+  background-color: #fff3e0;
+  color: #f57c00;
+  border: 1px solid #ffcc02;
+}
+
+.customer-item {
   cursor: pointer;
-  margin: 5px 0;
+  margin: 12px 0;
+  padding: 16px;
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  background: white;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+
   &:hover {
-    text-decoration: underline;
+    border-color: #007bff;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    transform: translateY(-2px);
+  }
+
+  .customer-info {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .customer-name {
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+  }
+
+  .customer-details {
+    display: flex;
+    gap: 16px;
+    font-size: 14px;
+    color: #666;
+    flex-wrap: wrap;
+  }
+
+  .customer-email {
+    color: #007bff;
+  }
+
+  .customer-phone {
+    color: #28a745;
+  }
+
+  .customer-meta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 12px;
+  }
+
+  .registration-years {
+    color: #6c757d;
+  }
+
+  .inactive-badge {
+    background: #dc3545;
+    color: white;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: 500;
+  }
+
+  .important-badge {
+    font-size: 16px;
+    cursor: help;
+  }
+}
+
+@media (max-width: 768px) {
+  .customer-item {
+    margin: 8px 0;
+    padding: 12px;
+
+    .customer-details {
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .customer-name {
+      font-size: 16px;
+    }
   }
 }

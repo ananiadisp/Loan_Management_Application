@@ -1,16 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { CustomerService } from '../services/customer.service';
 import { CustomerDetails } from '../../models/customer-details.model';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { YearsSincePipe } from '../../shared/years-since.pipe';
+import { Location } from '@angular/common';
 
 @Component({
   standalone: true,
   selector: 'app-customer-details',
   templateUrl: './customer-details.component.html',
   styleUrls: ['./customer-details.component.scss'],
-  imports: [CommonModule],
+  imports: [CommonModule, YearsSincePipe],
 })
 export class CustomerDetailsComponent implements OnInit {
   public customerDetails: CustomerDetails | null = null;
@@ -21,7 +23,13 @@ export class CustomerDetailsComponent implements OnInit {
 
   private readonly loadedSubject: BehaviorSubject<boolean> =
     new BehaviorSubject<boolean>(false);
-  constructor(private service: CustomerService, private route: ActivatedRoute) {
+
+  constructor(
+    private service: CustomerService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private location: Location
+  ) {
     this.customerDetails$ = this.customerDetailsSubject.asObservable();
     this.loaded$ = this.loadedSubject.asObservable();
   }
@@ -35,5 +43,13 @@ export class CustomerDetailsComponent implements OnInit {
         this.loadedSubject.next(true);
       });
     }
+  }
+
+  goBack() {
+    this.location.back();
+  }
+
+  viewLoan(loanId: number) {
+    this.router.navigate(['/loans', loanId, 'details']);
   }
 }
