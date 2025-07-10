@@ -1,13 +1,22 @@
 import { Routes } from '@angular/router';
-import { DummyHomeComponent } from './dummy-home/dummy-home.component';
 
 export const routes: Routes = [
-  { path: 'home', component: DummyHomeComponent },
   {
     path: 'customers',
     loadComponent: () =>
       import('./customers/index').then((m) => m.CustomerListComponent),
   },
-  // { path: '', redirectTo: '/home', pathMatch: 'full' },
-  // { path: '**', component: PageNotFoundComponent },
+  {
+    path: 'customers/:id/details',
+    loadComponent: () =>
+      import('./customers/index').then((m) => m.CustomerDetailsComponent),
+  },
+  { path: '', redirectTo: '/customers', pathMatch: 'full' },
+  {
+    path: '**',
+    loadComponent: () =>
+      import('./page-not-found/page-not-found.component').then(
+        (m) => m.PageNotFoundComponent
+      ),
+  },
 ];

@@ -1,9 +1,18 @@
-<div *ngIf="loading">Loading customer details...</div>
-<div *ngIf="error">{{ error }}</div>
-<div *ngIf="!loading && !error && customer">
-<h2>{{customer.firstName}} {{customer.lastName}}</h2>
-<p>Email: {{customer.email}}</p>
-<p>Phone: {{customer.phoneNumber}}</p>
-<p>Credit Score: {{customer.creditScore}}</p>
-<button [routerLink]="['/customers', customer.id, 'loans']">View Loans</button>
+<div *ngIf="loaded$ | async">
+  <h2>{{ customerDetails?.firstName }} {{ customerDetails?.lastName }}</h2>
+  <!-- <p>Email: {{ customerDetails.Email }}</p> -->
+  <!-- <p>Phone: {{ customerDetails.phoneNumber }}</p>
+<p>Credit Score: {{ customerDetails.creditScore }}</p> -->
+  <!-- <button
+  [routerLink]="[
+    '/customerDetailss',
+    customerDetails.customerDetailsID,
+    'loans'
+  ]"
+>
+  View Loans
+</button> -->
+  <div *ngFor="let c of customerDetails?.loans">
+    {{ c.customerId }} {{ c.approvedAmount }}
+  </div>
 </div>
