@@ -7,6 +7,7 @@ import { Customer } from '../../models/customer.model';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, combineLatest, map } from 'rxjs';
 import { SearchBarComponent } from '../search-bar/search-bar.component';
+import { LoanCalculator } from '../../shared/loan-calculator.util';
 
 @Component({
   selector: 'app-customer-list',
@@ -87,6 +88,8 @@ export class CustomerListComponent implements OnInit {
   }
 
   ngOnInit() {
+    const payment = LoanCalculator.monthlyPayment(200000, 5, 240);
+    console.log(payment); // e.g. $1319.91/month
     console.log('CustomerListComponent initializing...');
     this.customerService.getCustomers().subscribe({
       next: (data) => {

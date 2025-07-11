@@ -6,12 +6,6 @@
 <div class="customers-container">
   <div *ngIf="loading" class="loading">Loading customers...</div>
   <div *ngIf="error" class="error">{{ error }}</div>
-  <!-- <div
-    *ngIf="!loading && !error && (filteredCustomers$ | async)?.length === 0"
-    class="no-results"
-  >
-    No customers found matching your search criteria.
-  </div> -->
 
   <div
     *ngFor="let c of filteredCustomers$ | async"

@@ -1,31 +1,4 @@
-<!-- <div class="loan-list-container"> -->
-<!-- <div class="header">
-    <h1>Loan Management</h1>
-    <button class="add-loan-btn">+ Add New Loan</button>
-  </div> -->
-
-<!-- <div class="loan-container"> -->
-<!-- <div *ngIf="loading" class="loading">Loading loans...</div>
-    <div *ngIf="error" class="error">{{ error }}</div> -->
-
-<!-- <div
-      *ngFor="let c of filteredLoans$ | async"
-      (click)="select(c)"
-      class="customer-item"
-    > -->
-<!-- <div class="customer-info">
-        <div class="customer-name">{{ c.loanId }} {{ c.approvedAmount }}</div>
-      </div> -->
-<!-- </div> -->
-<!-- </div>
-</div> -->
-
 <div class="loan-list-container">
-  <div class="header">
-    <h1>Loan Management</h1>
-    <button class="add-loan-btn">+ Add New Loan</button>
-  </div>
-
   <div class="content">
     <div *ngIf="loading" class="loading">
       <div class="spinner"></div>
@@ -38,12 +11,6 @@
     </div>
 
     <div class="loans-section">
-      <!-- <div *ngIf="(filteredLoans$ | async)?.length === 0" class="no-loans">
-        <div class="no-loans-icon">📋</div>
-        <h3>No loans found</h3>
-        <p>No loans match your search criteria.</p>
-      </div> -->
-
       <div *ngIf="filteredLoans$ | async" class="loans-grid">
         <div
           *ngFor="let loan of filteredLoans$ | async"
@@ -55,12 +22,6 @@
               <span class="label">Loan #</span>
               <span class="value">{{ loan.loanId }}</span>
             </div>
-            <!-- <div class="loan-status" [class]="getStatusClass(loan.loanStatus)">
-              <span class="status-icon">{{
-                getStatusIcon(loan.loanStatus)
-              }}</span>
-              <span class="status-text">{{ loan.loanStatus }}</span>
-            </div> -->
           </div>
 
           <div class="loan-info">
@@ -88,15 +49,6 @@
                 loan.lastPaymentDate | date : "shortDate"
               }}</span>
             </div>
-          </div>
-
-          <div class="loan-actions">
-            <button
-              class="view-btn"
-              (click)="viewLoan(loan); $event.stopPropagation()"
-            >
-              View Details
-            </button>
           </div>
         </div>
       </div>
