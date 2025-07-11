@@ -3,9 +3,8 @@ export interface Customer {
   firstName: string;
   lastName: string;
   email: string;
-  phone: string;
+  phoneNumber: string;
   address: string;
   creditScore: number;
   registrationDate: Date;
-  isActive: boolean;
 }

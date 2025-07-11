@@ -40,34 +40,10 @@ export class LoanListComponent implements OnInit, OnDestroy {
 
   constructor(private loanService: LoanService, private router: Router) {
     this.loans$ = this.loansSubject.asObservable();
-
     // Create filtered loans observable
-    this.filteredLoans$ = combineLatest([
-      this.loans$,
-      this.searchTermSubject.asObservable(),
-      this.statusFilterSubject.asObservable(),
-    ]).pipe(
-      map(([loans, searchTerm, statusFilter]) => {
-        let filtered = loans;
-
-        // Apply search filter
-        if (searchTerm && searchTerm.trim()) {
-          const term = searchTerm.toLowerCase().trim();
-          filtered = filtered.filter(
-            (loan) =>
-              loan.purpose?.toLowerCase().includes(term) ||
-              loan.status.toLowerCase().includes(term) ||
-              loan.customerId.toString().includes(term) ||
-              loan.id.toString().includes(term)
-          );
-        }
-
-        // Apply status filter
-        if (statusFilter) {
-          filtered = filtered.filter((loan) => loan.status === statusFilter);
-        }
-
-        return filtered;
+    this.filteredLoans$ = combineLatest([this.loans$]).pipe(
+      map(([loans]) => {
+        return loans;
       })
     );
   }
@@ -82,7 +58,6 @@ export class LoanListComponent implements OnInit, OnDestroy {
   }
 
   loadLoans() {
-    this.loading = true;
     this.error = '';
 
     this.loanService
@@ -90,8 +65,8 @@ export class LoanListComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (data) => {
-          this.loans = data;
           this.loansSubject.next(data);
+          this.loans = data;
           this.loading = false;
         },
         error: (err) => {
@@ -113,7 +88,12 @@ export class LoanListComponent implements OnInit, OnDestroy {
   }
 
   viewLoan(loan: Loan) {
-    this.router.navigate(['/loans', loan.id, 'details']);
+    this.router.navigate(['/loans', loan.loanId, 'details']);
+  }
+
+  public select(loan: Loan) {
+    console.log('Selected:', loan);
+    this.router.navigate([`/loans/${loan.loanId}/details`]);
   }
 
   getStatusClass(status: LoanStatus): string {

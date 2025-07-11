@@ -3,7 +3,7 @@
     <input
       type="text"
       class="search-input"
-      placeholder="Search customers by name, email, or phone..."
+      placeholder="Search customers by name, email..."
       [(ngModel)]="searchTerm"
       (input)="onSearchChange()"
       (keyup.enter)="onSearch()"
@@ -22,23 +22,5 @@
     >
       ✕
     </button>
-  </div>
-  <div class="search-filters">
-    <label class="filter-label">
-      <input
-        type="checkbox"
-        [(ngModel)]="activeOnly"
-        (change)="onFiltersChange()"
-      />
-      Active customers only
-    </label>
-    <label class="filter-label">
-      <input
-        type="checkbox"
-        [(ngModel)]="importantOnly"
-        (change)="onFiltersChange()"
-      />
-      Important customers only
-    </label>
   </div>
 </div>

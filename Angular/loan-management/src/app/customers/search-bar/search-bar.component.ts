@@ -60,15 +60,4 @@ export class SearchBarComponent implements OnInit, OnDestroy {
     this.searchTerm = '';
     this.searchSubject.next('');
   }
-
-  onFiltersChange() {
-    console.log('Filters changed:', {
-      activeOnly: this.activeOnly,
-      importantOnly: this.importantOnly,
-    });
-    this.filtersChange.emit({
-      activeOnly: this.activeOnly,
-      importantOnly: this.importantOnly,
-    });
-  }
 }

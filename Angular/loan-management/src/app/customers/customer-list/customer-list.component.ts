@@ -66,17 +66,9 @@ export class CustomerListComponent implements OnInit {
             (customer) =>
               customer.firstName.toLowerCase().includes(term) ||
               customer.lastName.toLowerCase().includes(term) ||
-              customer.email.toLowerCase().includes(term) ||
-              customer.phone.includes(term)
+              customer.email.toLowerCase().includes(term)
           );
           console.log('After search filter:', filtered.length, 'customers');
-        }
-
-        // Apply active filter
-        if (filters.activeOnly) {
-          console.log('Applying active filter');
-          filtered = filtered.filter((customer) => customer.isActive);
-          console.log('After active filter:', filtered.length, 'customers');
         }
 
         // Apply important customer filter

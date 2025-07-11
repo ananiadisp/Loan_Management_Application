@@ -76,7 +76,7 @@
       >
         <div *ngFor="let loan of customerDetails?.loans" class="loan-card">
           <div class="loan-header">
-            <h4>Loan #{{ loan.id }}</h4>
+            <h4>Loan #{{ loan.loanId }}</h4>
             <span class="loan-amount"
               >${{ loan.approvedAmount.toNumber() | number : "1.2-2" }}</span
             >
@@ -88,7 +88,7 @@
             </div>
           </div>
           <div class="loan-actions">
-            <button class="view-loan-button" (click)="viewLoan(loan.id)">
+            <button class="view-loan-button" (click)="viewLoan(loan.loanId)">
               View Details
             </button>
           </div>

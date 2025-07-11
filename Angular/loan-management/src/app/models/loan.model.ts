@@ -9,12 +9,12 @@ export interface Loan {
   customerId: number;
   loanProductId: number;
   approvedAmount: Decimal;
-  disbursementDate: Date;
+  disbursementDate: Date | null;
   maturityDate: Date;
   interestRate: Decimal;
   currentBalance: Decimal;
   originalTermMonths: number;
-  loanStatus: string;
+  loanStatus: LoanStatus;
   lastPaymentDate?: Date;
   nextPaymentDueDate?: Date;
 

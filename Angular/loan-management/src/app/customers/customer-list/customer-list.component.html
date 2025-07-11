@@ -6,12 +6,12 @@
 <div class="customers-container">
   <div *ngIf="loading" class="loading">Loading customers...</div>
   <div *ngIf="error" class="error">{{ error }}</div>
-  <div
+  <!-- <div
     *ngIf="!loading && !error && (filteredCustomers$ | async)?.length === 0"
     class="no-results"
   >
     No customers found matching your search criteria.
-  </div>
+  </div> -->
 
   <div
     *ngFor="let c of filteredCustomers$ | async"
@@ -20,16 +20,20 @@
     class="customer-item"
   >
     <div class="customer-info">
-      <div class="customer-name">{{ c.firstName }} {{ c.lastName }}</div>
+      <div class="display-Flex">
+        <div class="customer-name">{{ c.firstName }}</div>
+        &nbsp;
+        <div class="customer-lastName">{{ c.lastName }}</div>
+      </div>
       <div class="customer-details">
         <span class="customer-email">{{ c.email }}</span>
-        <span class="customer-phone">{{ c.phone }}</span>
+        <span class="customer-phone">{{ c.phoneNumber }}</span>
       </div>
+
       <div class="customer-meta">
         <span class="registration-years"
           >({{ c.registrationDate | yearsSince }} years)</span
         >
-        <span *ngIf="!c.isActive" class="inactive-badge">Inactive</span>
         <span
           *ngIf="isImportantCustomer(c.registrationDate)"
           class="important-badge"

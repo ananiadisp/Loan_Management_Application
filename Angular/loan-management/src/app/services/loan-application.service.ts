@@ -32,174 +32,170 @@ export class LoanApplicationService {
   /**
    * Get loans by customer ID
    */
-  getLoansByCustomerId(customerId: number): Observable<Loan[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/customer/${customerId}`).pipe(
-      map((loans) => loans.map((loan) => this.mapToLoan(loan))),
-      retry(2),
-      catchError(this.handleError)
-    );
-  }
+  // getLoansByCustomerId(customerId: number): Observable<Loan[]> {
+  //   return this.http.get<any[]>(`${this.apiUrl}/customer/${customerId}`).pipe(
+  //     map((loans) => loans.map((loan) => this.mapToLoan(loan))),
+  //     retry(2),
+  //     catchError(this.handleError)
+  //   );
+  // }
 
   /**
    * Get loan by ID
    */
-  getLoanById(loanId: number): Observable<Loan> {
-    return this.http.get<any>(`${this.apiUrl}/${loanId}`).pipe(
-      map((loan) => this.mapToLoan(loan)),
-      retry(2),
-      catchError(this.handleError)
-    );
-  }
+  // getLoanById(loanId: number): Observable<Loan> {
+  //   return this.http.get<any>(`${this.apiUrl}/${loanId}`).pipe(
+  //     map((loan) => this.mapToLoan(loan)),
+  //     retry(2),
+  //     catchError(this.handleError)
+  //   );
+  // }
 
   /**
    * Get loans by status
    */
-  getLoansByStatus(status: LoanStatus): Observable<Loan[]> {
-    const params = new HttpParams().set('status', status);
-    return this.http.get<any[]>(`${this.apiUrl}/status`, { params }).pipe(
-      map((loans) => loans.map((loan) => this.mapToLoan(loan))),
-      retry(2),
-      catchError(this.handleError)
-    );
-  }
+  // getLoansByStatus(status: LoanStatus): Observable<Loan[]> {
+  //   const params = new HttpParams().set('status', status);
+  //   return this.http.get<any[]>(`${this.apiUrl}/status`, { params }).pipe(
+  //     map((loans) => loans.map((loan) => this.mapToLoan(loan))),
+  //     retry(2),
+  //     catchError(this.handleError)
+  //   );
+  // }
 
   /**
    * Update loan status
    */
-  updateLoanStatus(loanId: number, status: LoanStatus): Observable<Loan> {
-    const payload = { status };
-    return this.http.put<any>(`${this.apiUrl}/${loanId}/status`, payload).pipe(
-      map((loan) => this.mapToLoan(loan)),
-      catchError(this.handleError)
-    );
-  }
+  // updateLoanStatus(loanId: number, status: LoanStatus): Observable<Loan> {
+  //   const payload = { status };
+  //   return this.http.put<any>(`${this.apiUrl}/${loanId}/status`, payload).pipe(
+  //     map((loan) => this.mapToLoan(loan)),
+  //     catchError(this.handleError)
+  //   );
+  // }
 
   /**
    * Approve loan
    */
-  approveLoan(
-    loanId: number,
-    approvedAmount: Decimal,
-    interestRate: number,
-    termInMonths: number
-  ): Observable<Loan> {
-    const payload = {
-      approvedAmount: approvedAmount.toNumber(),
-      interestRate,
-      termInMonths,
-    };
+  // approveLoan(
+  //   loanId: number,
+  //   approvedAmount: Decimal,
+  //   interestRate: number,
+  //   termInMonths: number
+  // ): Observable<Loan> {
+  //   const payload = {
+  //     approvedAmount: approvedAmount.toNumber(),
+  //     interestRate,
+  //     termInMonths,
+  //   };
 
-    return this.http.put<any>(`${this.apiUrl}/${loanId}/approve`, payload).pipe(
-      map((loan) => this.mapToLoan(loan)),
-      catchError(this.handleError)
-    );
-  }
+  //   return this.http.put<any>(`${this.apiUrl}/${loanId}/approve`, payload).pipe(
+  //     map((loan) => this.mapToLoan(loan)),
+  //     catchError(this.handleError)
+  //   );
+  // }
 
   /**
    * Reject loan
    */
-  rejectLoan(loanId: number, reason: string): Observable<Loan> {
-    const payload = { reason };
-    return this.http.put<any>(`${this.apiUrl}/${loanId}/reject`, payload).pipe(
-      map((loan) => this.mapToLoan(loan)),
-      catchError(this.handleError)
-    );
-  }
+  // rejectLoan(loanId: number, reason: string): Observable<Loan> {
+  //   const payload = { reason };
+  //   return this.http.put<any>(`${this.apiUrl}/${loanId}/reject`, payload).pipe(
+  //     map((loan) => this.mapToLoan(loan)),
+  //     catchError(this.handleError)
+  //   );
+  // }
 
   /**
    * Disburse loan
    */
-  disburseLoan(loanId: number): Observable<Loan> {
-    return this.http.put<any>(`${this.apiUrl}/${loanId}/disburse`, {}).pipe(
-      map((loan) => this.mapToLoan(loan)),
-      catchError(this.handleError)
-    );
-  }
+  // disburseLoan(loanId: number): Observable<Loan> {
+  //   return this.http.put<any>(`${this.apiUrl}/${loanId}/disburse`, {}).pipe(
+  //     map((loan) => this.mapToLoan(loan)),
+  //     catchError(this.handleError)
+  //   );
+  // }
 
   /**
    * Calculate loan payment
-   */
-  calculateLoanPayment(
-    principal: Decimal,
-    interestRate: number,
-    termInMonths: number
-  ): Observable<Decimal> {
-    const params = new HttpParams()
-      .set('principal', principal.toString())
-      .set('interestRate', interestRate.toString())
-      .set('termInMonths', termInMonths.toString());
+  //  */
+  // calculateLoanPayment(
+  //   principal: Decimal,
+  //   interestRate: number,
+  //   termInMonths: number
+  // ): Observable<Decimal> {
+  //   const params = new HttpParams()
+  //     .set('principal', principal.toString())
+  //     .set('interestRate', interestRate.toString())
+  //     .set('termInMonths', termInMonths.toString());
 
-    return this.http
-      .get<any>(`${this.apiUrl}/calculate-payment`, { params })
-      .pipe(
-        map((result) => new Decimal(result.monthlyPayment || 0)),
-        catchError(this.handleError)
-      );
-  }
+  //   return this.http
+  //     .get<any>(`${this.apiUrl}/calculate-payment`, { params })
+  //     .pipe(
+  //       map((result) => new Decimal(result.monthlyPayment || 0)),
+  //       catchError(this.handleError)
+  //     );
+  // }
 
   /**
    * Search loans
    */
-  searchLoans(searchTerm: string): Observable<Loan[]> {
-    const params = new HttpParams().set('search', searchTerm);
-    return this.http.get<any[]>(`${this.apiUrl}/search`, { params }).pipe(
-      map((loans) => loans.map((loan) => this.mapToLoan(loan))),
-      retry(2),
-      catchError(this.handleError)
-    );
-  }
+  // searchLoans(searchTerm: string): Observable<Loan[]> {
+  //   const params = new HttpParams().set('search', searchTerm);
+  //   return this.http.get<any[]>(`${this.apiUrl}/search`, { params }).pipe(
+  //     map((loans) => loans.map((loan) => this.mapToLoan(loan))),
+  //     retry(2),
+  //     catchError(this.handleError)
+  //   );
+  // }
 
   /**
    * Get paginated loans
    */
-  getPaginatedLoans(
-    page: number = 1,
-    pageSize: number = 10,
-    sortBy: string = 'id',
-    sortOrder: 'asc' | 'desc' = 'desc'
-  ): Observable<{ loans: Loan[]; totalCount: number }> {
-    const params = new HttpParams()
-      .set('page', page.toString())
-      .set('pageSize', pageSize.toString())
-      .set('sortBy', sortBy)
-      .set('sortOrder', sortOrder);
+  // getPaginatedLoans(
+  //   page: number = 1,
+  //   pageSize: number = 10,
+  //   sortBy: string = 'id',
+  //   sortOrder: 'asc' | 'desc' = 'desc'
+  // ): Observable<{ loans: Loan[]; totalCount: number }> {
+  //   const params = new HttpParams()
+  //     .set('page', page.toString())
+  //     .set('pageSize', pageSize.toString())
+  //     .set('sortBy', sortBy)
+  //     .set('sortOrder', sortOrder);
 
-    return this.http.get<any>(`${this.apiUrl}/paginated`, { params }).pipe(
-      map((result) => ({
-        loans: result.loans.map((loan: any) => this.mapToLoan(loan)),
-        totalCount: result.totalCount,
-      })),
-      catchError(this.handleError)
-    );
-  }
+  //   return this.http.get<any>(`${this.apiUrl}/paginated`, { params }).pipe(
+  //     map((result) => ({
+  //       loans: result.loans.map((loan: any) => this.mapToLoan(loan)),
+  //       totalCount: result.totalCount,
+  //     })),
+  //     catchError(this.handleError)
+  //   );
+  // }
 
   /**
    * Map API response to Loan model
    */
   private mapToLoan(loan: any): Loan {
     return {
-      id: loan.id,
+      loanId: loan.id,
       customerId: loan.customerId,
+      applicationId: loan.applicationId,
+      loanProductId: loan.loanProductId,
       approvedAmount: new Decimal(loan.approvedAmount || 0),
-      requestedAmount: loan.requestedAmount
-        ? new Decimal(loan.requestedAmount)
-        : undefined,
+      maturityDate: new Date(loan.maturityDate),
       interestRate: loan.interestRate,
-      termInMonths: loan.termInMonths,
-      status: loan.status as LoanStatus,
-      applicationDate: new Date(loan.applicationDate),
-      approvalDate: loan.approvalDate ? new Date(loan.approvalDate) : undefined,
+      currentBalance: new Decimal(loan.currentBalance || 0),
+      originalTermMonths: loan.originalTermMonths,
+      loanStatus: loan.status,
+      lastPaymentDate: loan.lastPaymentDate,
+      nextPaymentDueDate: loan.nextPaymentDueDate,
       disbursementDate: loan.disbursementDate
         ? new Date(loan.disbursementDate)
-        : undefined,
-      purpose: loan.purpose,
-      collateral: loan.collateral,
-      monthlyPayment: loan.monthlyPayment
-        ? new Decimal(loan.monthlyPayment)
-        : undefined,
-      remainingBalance: loan.remainingBalance
-        ? new Decimal(loan.remainingBalance)
-        : undefined,
+        : null,
+      application: loan.application,
+      customer: loan.customer,
+      loanProduct: loan.loanProduct,
     };
   }
 
