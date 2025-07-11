@@ -42,6 +42,14 @@
     </div>
 
     <div class="loans-section">
+      <!-- Loan Application Form -->
+      <app-loan-application-form
+        *ngIf="showLoanApplicationForm"
+        [customerId]="customerDetails?.id || 0"
+        (formSubmitted)="onLoanApplicationSubmitted()"
+        (formCancelled)="onLoanApplicationCancelled()"
+      ></app-loan-application-form>
+
       <div class="loans-header">
         <h3>
           Loans ({{
@@ -50,7 +58,13 @@
               : 0
           }})
         </h3>
-        <button class="add-loan-button">+ Add New Loan</button>
+        <button
+          class="add-loan-button"
+          (click)="showAddLoanForm()"
+          [disabled]="showLoanApplicationForm"
+        >
+          + Add New Loan Application
+        </button>
       </div>
 
       <div
@@ -78,7 +92,7 @@
           <div class="loan-header">
             <h4>Loan #{{ loan.loanId }}</h4>
             <span class="loan-amount"
-              >${{ loan.approvedAmount.toNumber() | number : "1.2-2" }}</span
+              >${{ loan.approvedAmount.toFixed(2) }}</span
             >
           </div>
           <div class="loan-details">

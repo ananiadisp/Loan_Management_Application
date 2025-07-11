@@ -9,14 +9,45 @@ import { catchError, map, retry } from 'rxjs/operators';
 import { Loan, LoanStatus } from '../models/loan.model';
 import { environment } from '../../environment/environment';
 import { Decimal } from 'decimal.js';
+import { CreateLoanApplicationDto } from '../models/create-loan-application-dto.model';
+import { LoanProductDto } from '../models/loan-product-dto.model';
+import { EmployeeDto } from '../models/employee-dto';
 
 @Injectable({
   providedIn: 'root',
 })
 export class LoanApplicationService {
   private readonly apiUrl = `${environment.apiUrl}/loans`;
+  private readonly loanProductsUrl = `${environment.apiUrl}/loanproducts`;
+  private readonly employeesUrl = `${environment.apiUrl}/employees`;
 
   constructor(private http: HttpClient) {}
+
+  /**
+   * Submit loan application
+   */
+  submitLoanApplication(
+    createLoanApplicationDto: CreateLoanApplicationDto
+  ): Observable<number> {
+    return this.http
+      .post<number>(`${this.apiUrl}`, createLoanApplicationDto)
+      .pipe(catchError(this.handleError));
+  }
+
+  /**
+   * Get all loan products
+   */
+  getAllLoanProducts(): Observable<LoanProductDto[]> {
+    return this.http
+      .get<LoanProductDto[]>(this.loanProductsUrl)
+      .pipe(retry(2), catchError(this.handleError));
+  }
+
+  getAllEmployees(): Observable<EmployeeDto[]> {
+    return this.http
+      .get<EmployeeDto[]>(this.employeesUrl)
+      .pipe(retry(2), catchError(this.handleError));
+  }
 
   /**
    * Get all loans

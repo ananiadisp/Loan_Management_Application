@@ -52,9 +52,9 @@ namespace LoanManagement.Infrastructure.Repositories
         {
             const string sql = @"
             INSERT INTO LoanApp.LoanApplications
-            (CustomerId, LoanProductId, RequestedAmount, ApplicationStatus, ApplicationDate)
+            (CustomerId, LoanProductId, AssignedEmployeeID, RequestedAmount, ApplicationStatus, ApplicationDate)
             OUTPUT INSERTED.ApplicationID
-            VALUES (@CustomerId, @LoanProductId, @RequestedAmount, @ApplicationStatus, @ApplicationDate);";
+            VALUES (@CustomerId, @LoanProductId, @AssignedEmployeeID, @RequestedAmount, @ApplicationStatus, @ApplicationDate);";
 
             using var connection = new SqlConnection(_connectionString);
             await connection.OpenAsync();

@@ -1,0 +1,126 @@
+<div class="loan-application-form">
+  <div class="form-header">
+    <h3>New Loan Application</h3>
+    <p>
+      Fill out the form below to submit a loan application for this customer.
+    </p>
+  </div>
+
+  <div *ngIf="loading$ | async" class="loading">
+    <div class="spinner"></div>
+    <p>Loading loan products...</p>
+  </div>
+
+  <div *ngIf="error" class="error-message">
+    <p>{{ error }}</p>
+  </div>
+
+  <form
+    *ngIf="!(loading$ | async)"
+    [formGroup]="loanApplicationForm"
+    (ngSubmit)="onSubmit()"
+    class="application-form"
+  >
+    <div class="form-group">
+      <label for="customerId">Customer ID</label>
+      <input
+        type="text"
+        id="customerId"
+        [value]="customerId"
+        disabled
+        class="form-control"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="loanProductId">Loan Product *</label>
+      <select
+        id="loanProductId"
+        formControlName="loanProductId"
+        class="form-control"
+        [class.error]="
+          loanApplicationForm.get('loanProductId')?.errors &&
+          loanApplicationForm.get('loanProductId')?.touched
+        "
+      >
+        <option value="">Select a loan product...</option>
+        <option
+          *ngFor="let product of loanProducts"
+          [value]="product.loanProductID"
+        >
+          {{ product.productName }}
+        </option>
+      </select>
+      <div class="error-text" *ngIf="getErrorMessage('loanProductId')">
+        {{ getErrorMessage("loanProductId") }}
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="assignedEmployeeId">Employee *</label>
+      <select
+        id="assignedEmployeeId"
+        formControlName="assignedEmployeeId"
+        class="form-control"
+        [class.error]="
+          loanApplicationForm.get('assignedEmployeeId')?.errors &&
+          loanApplicationForm.get('assignedEmployeeId')?.touched
+        "
+      >
+        <option value="">Select an employee...</option>
+        <option
+          *ngFor="let employee of assignedEmployees"
+          [value]="employee.employeeID"
+        >
+          {{ employee.firstName }} {{ employee.lastName }}
+        </option>
+      </select>
+      <div class="error-text" *ngIf="getErrorMessage('assignedEmployeeId')">
+        {{ getErrorMessage("assignedEmployeeId") }}
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="requestedAmount">Requested Amount *</label>
+      <div class="amount-input">
+        <span class="currency-symbol">$</span>
+        <input
+          type="number"
+          id="requestedAmount"
+          formControlName="requestedAmount"
+          placeholder="0.00"
+          min="1"
+          max="1000000"
+          step="0.01"
+          class="form-control amount-field"
+          [class.error]="
+            loanApplicationForm.get('requestedAmount')?.errors &&
+            loanApplicationForm.get('requestedAmount')?.touched
+          "
+        />
+      </div>
+      <div class="error-text" *ngIf="getErrorMessage('requestedAmount')">
+        {{ getErrorMessage("requestedAmount") }}
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button
+        type="button"
+        (click)="onCancel()"
+        class="btn btn-secondary"
+        [disabled]="submitting"
+      >
+        Cancel
+      </button>
+      <button
+        type="submit"
+        class="btn btn-primary"
+        [disabled]="!loanApplicationForm.valid || submitting"
+      >
+        <span *ngIf="submitting" class="button-spinner"></span>
+        {{ submitting ? "Submitting..." : "Submit Application" }}
+      </button>
+    </div>
+  </form>
+</div>

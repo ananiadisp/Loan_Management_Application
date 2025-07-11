@@ -33,6 +33,7 @@ namespace LoanManagement.Application.Services
             {
                 CustomerID = createLoanApplicationDto.CustomerId,
                 LoanProductID = createLoanApplicationDto.LoanProductId,
+                AssignedEmployeeID = createLoanApplicationDto.AssignedEmployeeId,
                 RequestedAmount = createLoanApplicationDto.RequestedAmount,
                 ApplicationStatus = "Pending",
                 ApplicationDate = DateTime.UtcNow
