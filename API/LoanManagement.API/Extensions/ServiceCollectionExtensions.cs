@@ -14,10 +14,14 @@ namespace LoanManagement.API.Extensions
             services.AddScoped<ILoanRepository, LoanRepository>();
             services.AddScoped<ICustomerRepository, CustomerRepository>();
             services.AddScoped<IPaymentRepository, PaymentRepository>();
+            services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+            services.AddScoped<ILoanProductRepository, LoanProductRepository>();
 
             services.AddScoped<ILoanService, LoanService>();
             services.AddScoped<ICustomerService, CustomerService>();
             services.AddScoped<IPaymentService, PaymentService>();
+            services.AddScoped<IEmployeeService, EmployeeService>();
+            services.AddScoped<ILoanProductService, LoanProductService>();
 
             services.AddScoped<IValidator<CreateLoanApplicationDto>, CreateLoanApplicationDtoValidator>();
             services.AddScoped<IValidator<CreatePaymentDto>, CreatePaymentDtoValidator>();
