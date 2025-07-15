@@ -11,23 +11,23 @@
     </div>
 
     <div class="loans-section">
-      <div *ngIf="filteredLoans$ | async" class="loans-grid">
+      <div *ngIf="loans$ | async" class="loans-grid">
         <div
-          *ngFor="let loan of filteredLoans$ | async"
+          *ngFor="let loan of loans$ | async"
           class="loan-card"
           (click)="select(loan)"
         >
           <div class="loan-header">
             <div class="loan-id">
               <span class="label">Loan #</span>
-              <span class="value">{{ loan.loanId }}</span>
+              <span class="value">{{ loan.loanID }}</span>
             </div>
           </div>
 
           <div class="loan-info">
             <div class="info-row">
               <span class="label">Customer ID:</span>
-              <span class="value">{{ loan.customerId }}</span>
+              <span class="value">{{ loan.customerID }}</span>
             </div>
             <div class="info-row">
               <span class="label">Amount:</span>

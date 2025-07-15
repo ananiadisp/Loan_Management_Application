@@ -46,5 +46,11 @@ namespace LoanManagement.Application.Services
         {
             return await _loanRepository.GetLoanApplication(loanApplicationId);
         }
+
+        public async Task<Loan> GetLoan(int loanId)
+        {
+            return await _loanRepository.GetLoan(loanId);
+        }
+
     }
 }

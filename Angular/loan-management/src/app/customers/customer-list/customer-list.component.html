@@ -1,7 +1,4 @@
-<app-search-bar
-  (searchChange)="onSearchChange($event)"
-  (filtersChange)="onFiltersChange($event)"
-></app-search-bar>
+<app-search-bar (searchChange)="onSearchChange($event)"></app-search-bar>
 
 <div class="customers-container">
   <div *ngIf="loading" class="loading">Loading customers...</div>

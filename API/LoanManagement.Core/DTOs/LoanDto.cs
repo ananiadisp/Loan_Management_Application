@@ -8,7 +8,7 @@ namespace LoanManagement.Core.DTOs
 {
     public class LoanDto
     {
-        public int Id { get; set; }
+        public int LoanId { get; set; }
         public int CustomerId { get; set; }
         public decimal ApprovedAmount { get; set; }
     }

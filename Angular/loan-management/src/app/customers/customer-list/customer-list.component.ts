@@ -72,16 +72,6 @@ export class CustomerListComponent implements OnInit {
           console.log('After search filter:', filtered.length, 'customers');
         }
 
-        // Apply important customer filter
-        if (filters.importantOnly) {
-          console.log('Applying important filter');
-          filtered = filtered.filter((customer) =>
-            this.isImportantCustomer(customer.registrationDate)
-          );
-          console.log('After important filter:', filtered.length, 'customers');
-        }
-
-        console.log('Final filtered result:', filtered.length, 'customers');
         return filtered;
       })
     );
@@ -114,14 +104,6 @@ export class CustomerListComponent implements OnInit {
   public onSearchChange(searchTerm: string) {
     console.log('CustomerListComponent received search term:', searchTerm);
     this.searchTermSubject.next(searchTerm);
-  }
-
-  public onFiltersChange(filters: {
-    activeOnly: boolean;
-    importantOnly: boolean;
-  }) {
-    console.log('CustomerListComponent received filters:', filters);
-    this.filtersSubject.next(filters);
   }
 
   public isImportantCustomer(registrationDate: Date): boolean {

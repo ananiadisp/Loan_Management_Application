@@ -1,14 +1,12 @@
 <div class="customer-details-container">
   <div *ngIf="!(loaded$ | async)" class="loading">
     <div class="spinner"></div>
-    <p>Loading customer details...</p>
+    <p>Loading loan details...</p>
   </div>
 
   <div *ngIf="loaded$ | async" class="customer-details">
     <div class="header">
-      <button class="back-button" (click)="goBack()">
-        ← Back to Customers
-      </button>
+      <button class="back-button" (click)="goBack()">← Back to Loans</button>
       <h1 class="customer-name">
         {{ customerDetails?.firstName }} {{ customerDetails?.lastName }}
       </h1>
@@ -90,7 +88,7 @@
       >
         <div *ngFor="let loan of customerDetails?.loans" class="loan-card">
           <div class="loan-header">
-            <h4>Loan #{{ loan.loanId }}</h4>
+            <h4>Loan #{{ loan.loanID }}</h4>
             <span class="loan-amount"
               >${{ loan.approvedAmount.toFixed(2) }}</span
             >
@@ -98,13 +96,8 @@
           <div class="loan-details">
             <div class="loan-detail">
               <label>Customer ID:</label>
-              <span>{{ loan.customerId }}</span>
+              <span>{{ loan.customerID }}</span>
             </div>
-          </div>
-          <div class="loan-actions">
-            <button class="view-loan-button" (click)="viewLoan(loan.loanId)">
-              View Details
-            </button>
           </div>
         </div>
       </div>

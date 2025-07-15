@@ -14,5 +14,6 @@ namespace LoanManagement.Core.Interfaces
         Task<decimal?> GetLoanBalanceAsync(int loanId);
         Task<int> InsertApplicationAsync(LoanApplication loanApplication);
         Task<LoanApplication> GetLoanApplication(int loanApplicationId);
+        Task<Loan> GetLoan(int loanId);
     }
 }

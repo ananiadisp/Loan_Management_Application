@@ -34,7 +34,7 @@ namespace LoanManagement.Infrastructure.Repositories
                     c.FirstName,
                     c.LastName,
                     c.RegistrationDate,
-                    l.LoanID AS Id,
+                    l.LoanID AS LoanId,
                     l.CustomerID,
                     l.ApprovedAmount
                 FROM CoreLoan.Customers c
@@ -57,14 +57,14 @@ namespace LoanManagement.Infrastructure.Repositories
                         customerMap.Add(existingCustomer.Id, existingCustomer);
                     }
 
-                    if (loan != null && loan.Id != 0)
+                    if (loan != null && loan.LoanId != 0)
                     {
                         existingCustomer.Loans.Add(loan);
                     }
                     return existingCustomer;
                 },
                 new { CustomerId = customerId },
-                splitOn: "Id"
+                splitOn: "LoanId"
             );
 
             return customerMap.Values.FirstOrDefault();

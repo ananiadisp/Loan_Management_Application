@@ -1,0 +1,33 @@
+<div class="customer-details-container">
+  <div *ngIf="!(loaded$ | async)" class="loading">
+    <div class="spinner"></div>
+    <p>Loading loan details...</p>
+  </div>
+
+  <div *ngIf="loaded$ | async" class="customer-details">
+    <div class="header">
+      <button class="back-button" (click)="goBack()">← Back to Loans</button>
+      <h1 class="customer-name">
+        {{ loanDetails?.application }}
+      </h1>
+    </div>
+
+    <div class="customer-info-card">
+      <div class="info-section">
+        <h3>Loan Information</h3>
+        <div class="info-grid">
+          <div class="info-item">
+            <label>Loan ID:</label>
+            <span>{{ loanDetails?.loanID }}</span>
+          </div>
+          <div class="info-item">
+            <label>Registration Date:</label>
+            <span>{{
+              loanDetails?.disbursementDate | date : "mediumDate"
+            }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

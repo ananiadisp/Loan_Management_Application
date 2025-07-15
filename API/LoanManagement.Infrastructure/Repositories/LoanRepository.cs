@@ -82,5 +82,22 @@ namespace LoanManagement.Infrastructure.Repositories
             }
             return result;
         }
+
+        public async Task<Loan> GetLoan(int loanId)
+        {
+            using var connection = new SqlConnection(_connectionString);
+            await connection.OpenAsync();
+
+            var sql = "SELECT * FROM CoreLoan.Loans WHERE LoanID = @LoanId";
+
+            var result = await connection.QuerySingleOrDefaultAsync<Loan>(sql, new { LoanId = loanId });
+
+            if (result is null)
+            {
+                throw new NotFoundException($"Loan with ID {loanId} not found.");
+            }
+            return result;
+        }
+
     }
 }

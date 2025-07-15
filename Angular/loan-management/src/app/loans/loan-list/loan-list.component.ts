@@ -21,7 +21,6 @@ export class LoanListComponent implements OnInit, OnDestroy {
   error = '';
 
   public readonly loans$: Observable<Loan[]>;
-  public readonly filteredLoans$: Observable<Loan[]>;
   private readonly loansSubject: BehaviorSubject<Loan[]> = new BehaviorSubject<
     Loan[]
   >([]);
@@ -31,21 +30,13 @@ export class LoanListComponent implements OnInit, OnDestroy {
     new BehaviorSubject<LoanStatus | null>(null);
   private readonly destroy$ = new Subject<void>();
 
-  // Filter properties
   selectedStatus: LoanStatus | null = null;
   searchTerm = '';
 
-  // Loan status enum for template
   LoanStatus = LoanStatus;
 
   constructor(private loanService: LoanService, private router: Router) {
     this.loans$ = this.loansSubject.asObservable();
-    // Create filtered loans observable
-    this.filteredLoans$ = combineLatest([this.loans$]).pipe(
-      map(([loans]) => {
-        return loans;
-      })
-    );
   }
 
   ngOnInit() {
@@ -88,53 +79,11 @@ export class LoanListComponent implements OnInit, OnDestroy {
   }
 
   viewLoan(loan: Loan) {
-    this.router.navigate(['/loans', loan.loanId, 'details']);
+    this.router.navigate(['/loans', loan.loanID, 'details']);
   }
 
   public select(loan: Loan) {
     console.log('Selected:', loan);
-    this.router.navigate([`/loans/${loan.loanId}/details`]);
-  }
-
-  getStatusClass(status: LoanStatus): string {
-    switch (status) {
-      case LoanStatus.ACTIVE:
-        return 'status-active';
-      case LoanStatus.APPROVED:
-        return 'status-approved';
-      case LoanStatus.PENDING:
-        return 'status-pending';
-      case LoanStatus.REJECTED:
-        return 'status-rejected';
-      case LoanStatus.CLOSED:
-        return 'status-closed';
-      case LoanStatus.DEFAULTED:
-        return 'status-defaulted';
-      case LoanStatus.DISBURSED:
-        return 'status-disbursed';
-      default:
-        return 'status-default';
-    }
-  }
-
-  getStatusIcon(status: LoanStatus): string {
-    switch (status) {
-      case LoanStatus.ACTIVE:
-        return '✅';
-      case LoanStatus.APPROVED:
-        return '👍';
-      case LoanStatus.PENDING:
-        return '⏳';
-      case LoanStatus.REJECTED:
-        return '❌';
-      case LoanStatus.CLOSED:
-        return '🔒';
-      case LoanStatus.DEFAULTED:
-        return '⚠️';
-      case LoanStatus.DISBURSED:
-        return '💰';
-      default:
-        return '📋';
-    }
+    this.router.navigate([`/loans/${loan.loanID}/details`]);
   }
 }

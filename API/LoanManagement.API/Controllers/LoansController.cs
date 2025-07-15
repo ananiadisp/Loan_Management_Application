@@ -35,7 +35,7 @@ namespace LoanManagement.API.Controllers
         public async Task<IActionResult> SubmitLoanApplication([FromBody] CreateLoanApplicationDto createLoanApplicationDto)
         {
             new CreateLoanApplicationDtoValidator().ValidateOrThrow(createLoanApplicationDto);
-          
+
             var id = await _loanService.SubmitLoanApplication(createLoanApplicationDto);
             return CreatedAtAction(nameof(GetApplicationById), new { id = id }, id);
         }
@@ -48,6 +48,16 @@ namespace LoanManagement.API.Controllers
                 return NotFound();
 
             return Ok(loanApplication);
+        }
+
+        [HttpGet("{id}/loan")]
+        public async Task<IActionResult> GetLoan(int id)
+        {
+            var loan = await _loanService.GetLoan(id);
+            if (loan == null)
+                return NotFound();
+
+            return Ok(loan);
         }
     }
 }

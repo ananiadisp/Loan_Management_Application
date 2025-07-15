@@ -4,10 +4,10 @@ import { LoanProduct } from './loan-product.model';
 import { LoanApplication } from './loan-application.model';
 
 export interface Loan {
-  loanId: number;
-  applicationId: number;
-  customerId: number;
-  loanProductId: number;
+  loanID: number;
+  applicationID: number;
+  customerID: number;
+  loanProductID: number;
   approvedAmount: Decimal;
   disbursementDate: Date | null;
   maturityDate: Date;
